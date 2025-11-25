@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthCare Pro - Online Healthcare Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c7fb8;
+            --secondary: #7fcdbb;
+            --accent: #edf8b1;
+            --dark: #253237;
+            --light: #f8f9fa;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+
+        body {
+            background-color: #f0f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background-color: #d9e89b;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            background: linear-gradient(rgba(44, 127, 184, 0.9), rgba(127, 205, 187, 0.9)), url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        /* User Types Section */
+        .user-types {
+            padding: 5rem 0;
+            background-color: #f0f7ff;
+        }
+
+        .user-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .user-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .user-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-body {
+            padding: 1.5rem;
+        }
+
+        .user-body ul {
+            list-style-type: none;
+        }
+
+        .user-body li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-body li:last-child {
+            border-bottom: none;
+        }
+
+        .user-body i {
+            color: var(--primary);
+        }
+
+        /* Dashboard Preview */
+        .dashboard-preview {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .dashboard-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .dashboard-card h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f1f1f1;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-confirmed {
+            background-color: #e6f7ee;
+            color: var(--success);
+        }
+
+        .status-pending {
+            background-color: #fef5e6;
+            color: var(--warning);
+        }
+
+        .status-cancelled {
+            background-color: #fde8e6;
+            color: var(--danger);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dashboard-tabs {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>HealthCare Pro</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#user-types">For Users</a></li>
+                        <li><a href="#dashboards">Dashboards</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline">Login</button>
+                    <button class="btn btn-primary">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Online Healthcare Management System</h1>
+            <p>Streamline your healthcare operations with our comprehensive platform designed for patients, doctors, and administrators.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">Get Started</button>
+                <button class="btn btn-outline">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>System Features</h2>
+                <p>Our platform offers a complete set of tools to manage all aspects of healthcare delivery</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Appointment Management</h3>
+                    <p>Easily schedule, reschedule, and manage appointments with an intuitive calendar interface.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Doctor Schedule Management</h3>
+                    <p>Doctors can manage their availability and view their appointment schedules.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h3>Medical Records</h3>
+                    <p>Secure storage and easy access to patient medical history and records.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3>User Management</h3>
+                    <p>Admins can manage user accounts, roles, and permissions with ease.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytics & Reports</h3>
+                    <p>Gain insights with comprehensive reports and performance analytics.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>System Settings</h3>
+                    <p>Customize system-wide settings and configurations to match your needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Types Section -->
+    <section class="user-types" id="user-types">
+        <div class="container">
+            <div class="section-title">
+                <h2>Designed For All Users</h2>
+                <p>Our system provides specialized interfaces for each type of user</p>
+            </div>
+            <div class="user-cards">
+                <div class="user-card">
+                    <div class="user-header">
+                        <h3>Patient</h3>
+                        <p>Manage your healthcare journey</p>
+                    </div>
+                    <div class="user-body">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Book and manage appointments</li>
+                            <li><i class="fas fa-check-circle"></i> View medical history and records</li>
+                            <li><i class="fas fa-check-circle"></i> Access doctor profiles and availability</li>
+                            <li><i class="fas fa-check-circle"></i> Receive appointment reminders</li>
+                            <li><i class="fas fa-check-circle"></i> Update personal profile information</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-header">
+                        <h3>Doctor</h3>
+                        <p>Streamline your practice</p>
+                    </div>
+                    <div class="user-body">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Manage appointment schedules</li>
+                            <li><i class="fas fa-check-circle"></i> Access and update patient records</li>
+                            <li><i class="fas fa-check-circle"></i> View appointment history and notes</li>
+                            <li><i class="fas fa-check-circle"></i> Set availability and working hours</li>
+                            <li><i class="fas fa-check-circle"></i> Receive patient feedback and ratings</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-header">
+                        <h3>Administrator</h3>
+                        <p>Oversee system operations</p>
+                    </div>
+                    <div class="user-body">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Manage user accounts and roles</li>
+                            <li><i class="fas fa-check-circle"></i> Oversee appointment scheduling</li>
+                            <li><i class="fas fa-check-circle"></i> Configure system settings</li>
+                            <li><i class="fas fa-check-circle"></i> Generate performance reports</li>
+                            <li><i class="fas fa-check-circle"></i> Monitor system usage and metrics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview -->
+    <section class="dashboard-preview" id="dashboards">
+        <div class="container">
+            <div class="section-title">
+                <h2>User Dashboards</h2>
+                <p>Explore the specialized interfaces designed for each user type</p>
+            </div>
+            
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-tab="patient">Patient Dashboard</button>
+                <button class="tab-btn" data-tab="doctor">Doctor Dashboard</button>
+                <button class="tab-btn" data-tab="admin">Admin Dashboard</button>
+            </div>
+            
+            <div class="tab-content active" id="patient-tab">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h4><i class="fas fa-calendar-alt"></i> Appointment Booking</h4>
+                        <p>Book new appointments with available doctors</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value">3</div>
+                                <div class="stat-label">Upcoming</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Past</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4><i class="fas fa-file-medical"></i> Medical History</h4>
+                        <p>Access your complete medical records</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value">5</div>
+                                <div class="stat-label">Records</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">2</div>
+                                <div class="stat-label">Prescriptions</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4><i class="fas fa-user"></i> Profile Management</h4>
+                        <p>Update your personal information and preferences</p>
+                        <button class="btn btn-primary" style="margin-top: 10px;">Edit Profile</button>
+                    </div>
+                </div>
+                
+                <h4 style="margin-bottom: 15px;">Recent Appointments</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Doctor</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jun 15, 2023</td>
+                            <td>Dr. Sarah Johnson</td>
+                            <td>Cardiology</td>
+                            <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                            <td><button class="btn btn-primary" style="padding: 5px 10px;">Reschedule</button></td>
+                        </tr>
+                        <tr>
+                            <td>Jun 10, 2023</td>
+                            <td>Dr. Michael Chen</td>
+                            <td>Dermatology</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td><button class="btn btn-primary" style="padding: 5px 10px;">Confirm</button></td>
+                        </tr>
+                        <tr>
+                            <td>May 28, 2023</td>
+                            <td>Dr. Emily Wilson</td>
+                            <td>Pediatrics</td>
+                            <td><span class="status-badge status-cancelled">Completed</span></td>
+                            <td><button class="btn btn-outline" style="padding: 5px 10px;">View Details</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tab-content" id="doctor-tab">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h4><i class="fas fa-calendar"></i> Today's Schedule</h4>
+                        <p>Manage your daily appointments</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Appointments</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">2</div>
+                                <div class="stat-label">Available Slots</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4><i class="fas fa-users"></i> Patient Records</h4>
+                        <p>Access and update patient information</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value">42</div>
+                                <div class="stat-label">Active Patients</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">5</div>
+                                <div class="stat-label">New This Month</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4><i class="fas fa-star"></i> Patient Feedback</h4>
+                        <p>View ratings and comments from patients</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value">4.8</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">24</div>
+                                <div class="stat-label">Reviews</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4 style="margin-bottom: 15px;">Upcoming Appointments</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Patient</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10:00 AM</td>
+                            <td>Robert Brown</td>
+                            <td>Follow-up</td>
+                            <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                            <td><button class="btn btn-primary" style="padding: 5px 10px;">Start</button></td>
+                        </tr>
+                        <tr>
+                            <td>11:30 AM</td>
+                            <td>Lisa Garcia</td>
+                            <td>Consultation</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td><button class="btn btn-primary" style="padding: 5px 10px;">Confirm</button></td>
+                        </tr>
+                        <tr>
+                            <td>2:15 PM</td>
+                            <td>James Wilson</td>
+                            <td>Check-up</td>
+                            <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                            <td><button class="btn btn-primary" style="padding: 5px 10px;">Reschedule</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tab-content" id="admin-tab">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h4><i class="fas fa-users"></i> User Management</h4>
+                        <p>Manage all system users and roles</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value">156</div>
+                                <div class="stat-label">Total Users</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Doctors</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4><i class="fas fa-calendar-check"></i> Appointments</h4>
+                        <p>Oversee all scheduled appointments</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value">48</div>
+                                <div class="stat-label">This Week</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">92%</div>
+                                <div class="stat-label">Completion Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4><i class="fas fa-chart-bar"></i> System Analytics</h4>
+                        <p>Monitor system performance and usage</p>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value">98.7%</div>
+                                <div class="stat-label">Uptime</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">1.2k</div>
+                                <div class="stat-label">Monthly Visits</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4 style="margin-bottom: 15px;">Recent System Activities</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date/Time</th>
+                            <th>User</th>
+                            <th>Activity</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jun 12, 10:23 AM</td>
+                            <td>Dr. Sarah Johnson</td>
+                            <td>Updated Schedule</td>
+                            <td>Added new availability slots</td>
+                        </tr>
+                        <tr>
+                            <td>Jun 12, 9:45 AM</td>
+                            <td>Robert Brown (Patient)</td>
+                            <td>Booked Appointment</td>
+                            <td>With Dr. Michael Chen</td>
+                        </tr>
+                        <tr>
+                            <td>Jun 11, 4:12 PM</td>
+                            <td>Admin</td>
+                            <td>User Registration</td>
+                            <td>New patient account created</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>HealthCare Pro</h3>
+                    <p>Comprehensive online healthcare management system designed to streamline operations for patients, doctors, and administrators.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#user-types">For Users</a></li>
+                        <li><a href="#dashboards">Dashboards</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Appointment Management</a></li>
+                        <li><a href="#">Medical Records</a></li>
+                        <li><a href="#">Patient Portal</a></li>
+                        <li><a href="#">Doctor Scheduling</a></li>
+                        <li><a href="#">Admin Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Healthcare Ave, Medical City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@healthcarepro.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 HealthCare Pro. All rights reserved. | Online Healthcare Management System</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality for dashboard preview
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = btn.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Simulate loading animation for buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
